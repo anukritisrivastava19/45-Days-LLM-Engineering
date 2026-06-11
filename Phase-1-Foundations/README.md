@@ -11,7 +11,7 @@ A from-scratch Python foundation. Even if you know some Python, these days lock 
 skills the AI track depends on (clean functions, data structures, error handling, OOP).
 
 - **[Day 01](Day-01-Python-Setup-Variables-and-Data-Types/)** — Setup, data types, operators & variables
-- **Day 02** — Strings, f-strings & string methods
+- **[Day 02](Day-02-Strings-F-Strings-and-Methods/)** — Strings, f-strings & string methods
 - **Day 03** — Booleans, conditionals & logical operators
 - **Day 04** — Loops
 - **Day 05** — Functions & scope

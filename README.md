@@ -18,6 +18,10 @@ folder and is broken into small, numbered, runnable modules so you can learn one
 
 > Full day-by-day breakdown (3 hrs/day, 3 projects + 1 capstone): see [`COURSE-PLAN.md`](COURSE-PLAN.md).
 
+> 🎯 **Career Launchpad** — a parallel **30-min daily talk** on getting hired & winning clients
+> (build-in-public + specialization). Plan: [`CAREER-PLAN.md`](CAREER-PLAN.md). Each day's deck lives
+> in that day's `career-talk/` folder.
+
 Inside every day:
 
 ```

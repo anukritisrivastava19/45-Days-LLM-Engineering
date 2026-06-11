@@ -9,8 +9,17 @@ learned from**, not just to run. Audience = students (pre-final/final-year B.Tec
 early-career) with only Python basics as a prerequisite.
 
 - Full curriculum: [`COURSE-PLAN.md`](COURSE-PLAN.md)
+- **Career track** (parallel 30-min/day "get hired" talks over slide decks): [`CAREER-PLAN.md`](CAREER-PLAN.md)
 - Original syllabus: `docs/course-1-45day-summer-training.md (4).pdf` (text: `docs/_syllabus.txt`)
 - Python-week source outline: `dump/python.txt`
+
+## The Career Launchpad track (parallel to the code)
+A separate **30-min daily talk** on getting hired / winning freelance work — thesis: **build content +
+specialize**. Source of truth: [`CAREER-PLAN.md`](CAREER-PLAN.md) (45-day arc, 5 themes). Each day's
+deck lives **inside that day's code folder** as `career-talk/index.html` (+ `README.md` speaker notes).
+Decks are self-contained branded HTML (reuse the Day-1 career deck as the shared template); ~10–14
+slides ≈ 30 min. Days 1–2 are committed; Days 3–7 are drafted locally. Keep `CAREER-PLAN.md` and the
+per-day decks in sync.
 
 **Structure:** 45 days · 3 hrs/day · 4 phases · 3 mini-projects + 1 capstone, all deployed free.
 
@@ -86,5 +95,9 @@ Phase-X-Name/Day-NN-Topic-In-Kebab-Case/
 ## Status
 - ✅ Repo scaffold, `README.md`, `COURSE-PLAN.md`, phase folders.
 - ✅ **Day 1** complete and verified (8 modules + 3 exercises).
-- ⏳ Days 2–7 (Python) next, then Day 8+ (AI track).
-- Not yet a git repo — initialize when ready.
+- ✅ **Day 2** complete and verified (8 modules + 3 exercises: Strings, f-strings & methods).
+- ✅ **Career Launchpad** plan (`CAREER-PLAN.md`) + **Days 1–2 career decks** committed; Days 3–7 decks drafted locally (not yet committed).
+- ✅ **Day 2 trainer's guide** (`TRAINERS-GUIDE.md`) — full minute-by-minute session script.
+- ⏳ Days 3–7 (Python *code*) next; then Day 8+ (AI track).
+- ⏳ Career decks Days 8–45 to follow.
+- Repo initialized (git).

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Career Launchpad · Day 1 — The Hidden Game</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  /* ===== Softpro brand theme (shared across all Career Launchpad decks) ===== */
+  :root{
+    --bg:#211f1d; --slide:#ffffff; --cream:#fbf1e6; --cream2:#fdf8f1;
+    --ink:#2c2a28; --ink-soft:#4f463f; --muted:#8a7f73; --line:#efe3d4;
+    --primary:#e8590c; --primary2:#fb8b3d; --gold:#d99000; --steel:#4e6e81; --olive:#6b8e23; --berry:#c0392b;
+    --radius:24px;
+    --shadow:0 30px 80px -20px rgba(20,12,4,.45),0 8px 24px -12px rgba(20,12,4,.3);
+    --font:"Plus Jakarta Sans","Segoe UI",system-ui,-apple-system,sans-serif;
+    --mono:"JetBrains Mono","Cascadia Code",Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;font-family:var(--font);color:var(--ink);-webkit-font-smoothing:antialiased;
+    background:radial-gradient(900px 600px at 12% 0%,#2e2a25 0%,transparent 55%),
+               radial-gradient(900px 600px at 100% 100%,#2a201a 0%,transparent 55%),var(--bg);
+    overflow:hidden}
+  .stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:clamp(12px,3vh,44px)}
+  .slide{display:none;width:min(1160px,96vw);height:min(700px,92vh);background:
+      radial-gradient(1100px 480px at 88% -12%,rgba(232,89,12,.06),transparent 60%),var(--slide);
+    border-radius:var(--radius);box-shadow:var(--shadow);padding:clamp(28px,5vw,64px);
+    overflow:hidden;position:relative;flex-direction:column;justify-content:center}
+  .slide.active{display:flex;animation:rise .5s cubic-bezier(.2,.7,.2,1)}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .slide.active>*{animation:fade .6s both}.slide.active>*:nth-child(2){animation-delay:.07s}
+  .slide.active>*:nth-child(3){animation-delay:.14s}.slide.active>*:nth-child(4){animation-delay:.21s}
+  .slide.active>*:nth-child(5){animation-delay:.28s}
+  @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+  .kicker{font-size:.8rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--primary);margin-bottom:14px}
+  h1{font-size:clamp(2.1rem,5.2vw,3.5rem);font-weight:800;line-height:1.05;letter-spacing:-.02em}
+  h2{font-size:clamp(1.6rem,3.6vw,2.4rem);font-weight:800;line-height:1.1;letter-spacing:-.01em;margin-bottom:18px}
+  p{font-size:clamp(1rem,1.7vw,1.22rem);color:var(--ink-soft);line-height:1.6;max-width:60ch}
+  .lead{font-size:clamp(1.1rem,2vw,1.4rem)}
+  .big{font-size:clamp(2.4rem,6vw,4rem);font-weight:800;color:var(--primary);line-height:1}
+  strong{color:var(--ink)}
+  .muted{color:var(--muted)}
+
+  .grid{display:grid;gap:16px;margin-top:8px}
+  .g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
+  .card{background:var(--cream);border:1px solid var(--line);border-radius:18px;padding:20px 22px;transition:transform .2s,box-shadow .2s}
+  .card:hover{transform:translateY(-4px);box-shadow:0 14px 30px -16px rgba(20,12,4,.35)}
+  .card h3{font-size:1.12rem;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+  .card p{font-size:.98rem;max-width:none}
+  .emoji{font-size:1.4rem}
+  .pill{display:inline-block;background:var(--cream);border:1px solid var(--line);border-radius:999px;
+    padding:7px 16px;font-size:.92rem;font-weight:600;color:var(--ink-soft);margin:5px 6px 0 0}
+  ul.clean{list-style:none;margin-top:10px}
+  ul.clean li{font-size:clamp(1rem,1.7vw,1.2rem);color:var(--ink-soft);line-height:1.5;padding:9px 0 9px 34px;position:relative}
+  ul.clean li::before{content:"";position:absolute;left:0;top:16px;width:14px;height:14px;border-radius:50%;
+    background:var(--primary);box-shadow:0 0 0 4px rgba(232,89,12,.15)}
+  ul.clean li.x::before{background:var(--berry);box-shadow:0 0 0 4px rgba(192,57,43,.15)}
+  .vs{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:stretch;margin-top:6px}
+  .vs .col{border-radius:18px;padding:22px}
+  .vs .no{background:#fdecea;border:1px solid #f3c9c2}.vs .yes{background:#eef6ec;border:1px solid #cfe6c6}
+  .vs .mid{display:flex;align-items:center;font-weight:800;color:var(--muted)}
+  .vs h3{font-size:1.05rem;margin-bottom:8px}.vs p{font-size:.95rem;max-width:none}
+
+  .action{background:linear-gradient(135deg,#fff,var(--cream2));border:2px solid var(--primary);
+    border-radius:20px;padding:24px 26px;margin-top:14px}
+  .action .tag{font-size:.78rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--primary)}
+  .action p{font-size:1.15rem;color:var(--ink);font-weight:600;margin-top:6px;max-width:none}
+
+  .cover{background:radial-gradient(1200px 500px at 20% -10%,rgba(232,89,12,.16),transparent 60%),
+      radial-gradient(900px 500px at 100% 120%,rgba(217,144,0,.12),transparent 55%),var(--slide)}
+  .brandbar{display:flex;align-items:center;gap:10px;margin-bottom:auto}
+  .dot{width:13px;height:13px;border-radius:50%;background:var(--primary)}
+  .brandbar span{font-weight:700;letter-spacing:.02em}
+  .cover h1 em{font-style:normal;color:var(--primary)}
+  .footer-note{margin-top:auto;color:var(--muted);font-size:.95rem}
+
+  /* nav + chrome */
+  .bar{position:fixed;top:0;left:0;height:4px;background:linear-gradient(90deg,var(--primary),var(--primary2));z-index:9;transition:width .3s}
+  .count{position:fixed;left:18px;bottom:14px;color:var(--cream);font-size:.85rem;font-weight:600;opacity:.8;z-index:9;font-variant-numeric:tabular-nums}
+  .nav{position:fixed;right:18px;bottom:14px;display:flex;gap:8px;z-index:9}
+  .nav button{width:42px;height:42px;border-radius:12px;border:1px solid rgba(255,255,255,.18);
+    background:rgba(255,255,255,.08);color:#fff;font-size:1.1rem;cursor:pointer;backdrop-filter:blur(8px);transition:background .2s}
+  .nav button:hover{background:rgba(255,255,255,.2)}
+  .hint{position:fixed;right:18px;top:16px;color:var(--cream);font-size:.78rem;opacity:.5;z-index:9}
+  @media(max-width:640px){.g2,.g3,.vs{grid-template-columns:1fr}.vs .mid{display:none}}
+</style>
+</head>
+<body>
+<div class="bar" id="bar"></div>
+<div class="hint">→ / Space to advance · F for fullscreen</div>
+<div class="stage" id="stage">
+
+  <!-- 1 -->
+  <section class="slide cover active">
+    <div class="brandbar"><span class="dot"></span><span>Softpro · Career Launchpad</span></div>
+    <div class="kicker">Day 1 · 30 minutes</div>
+    <h1>The <em>Hidden Game</em><br>of getting hired</h1>
+    <p class="lead" style="margin-top:18px">Why skilled people stay unemployed — and the two levers that actually land jobs and clients.</p>
+    <div class="footer-note">Runs every day, alongside the code. 45 days → an audience, a niche, a portfolio.</div>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide">
+    <div class="kicker">The belief everyone starts with</div>
+    <h2>"If I just learn enough, the job will come."</h2>
+    <p>It feels true. It's how school worked: study → exam → marks. So we assume careers work the same way.</p>
+    <p style="margin-top:14px"><strong>They don't.</strong> The market is full of skilled people who can't get a callback — and less-skilled people with three offers. Today we figure out why.</p>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide">
+    <div class="kicker">Skill is just the tip</div>
+    <h2>The iceberg</h2>
+    <div class="grid g2">
+      <div class="card"><h3><span class="emoji">🧊</span> Above the water (visible)</h3><p><strong>Your skills.</strong> Everyone in the room will have these by Day 45. They get you <em>considered</em> — not chosen.</p></div>
+      <div class="card"><h3><span class="emoji">🌊</span> Below the water (decides it)</h3><p><strong>Proof · Visibility · Network.</strong> Can people <em>see</em> what you can do? Do they <em>know you exist</em>? This is where jobs are actually won.</p></div>
+    </div>
+    <p style="margin-top:16px" class="muted">This whole track is about everything below the waterline.</p>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide">
+    <div class="kicker">Same skills, different outcome</div>
+    <h2>Two students. One gets hired.</h2>
+    <div class="vs">
+      <div class="col no"><h3>Student A</h3><p>Finishes the course. Skills locked in. Resume sent to 80 companies. Silence. "Maybe I need one more certification."</p></div>
+      <div class="mid">vs</div>
+      <div class="col yes"><h3>Student B</h3><p>Same skills — but posted their build every week, became known for RAG, got DM'd by a founder who'd seen their work.</p></div>
+    </div>
+    <p style="margin-top:16px">The difference wasn't talent. It was <strong>visibility + a clear specialty.</strong></p>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide">
+    <div class="kicker">The whole track in one slide</div>
+    <h2>Two levers that change everything</h2>
+    <div class="grid g2">
+      <div class="card"><h3><span class="emoji">📣</span> 1. Content / build in public</h3><p>Show your work as you learn. Opportunities start coming <strong>to you</strong> instead of you chasing them.</p></div>
+      <div class="card"><h3><span class="emoji">🎯</span> 2. Specialization</h3><p>Be known for <strong>one specific thing</strong>. "I build RAG systems" beats "I know AI" every time.</p></div>
+    </div>
+    <p style="margin-top:16px">Pull both levers for 45 days and you graduate as a <strong>known quantity</strong>, not a stranger with a certificate.</p>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide">
+    <div class="kicker">Lever 1</div>
+    <h2>Content makes opportunity come to you</h2>
+    <ul class="clean">
+      <li>Every post is a tiny salesperson working for you 24/7 — even while you sleep.</li>
+      <li>Recruiters and clients <strong>search</strong> for people who post about their problem.</li>
+      <li>You don't need to be an expert — <strong>"learn in public"</strong> is enough. Teach what you learned yesterday.</li>
+      <li>A year of posts = an asset no one can take from you.</li>
+    </ul>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide">
+    <div class="kicker">Lever 2</div>
+    <h2>Specialists get picked first</h2>
+    <p>When a company has a RAG problem, who do they hire — "an AI guy," or "the person whose whole feed is about RAG"?</p>
+    <div style="margin-top:14px">
+      <span class="pill">❌ "I do AI / ML / web / apps"</span>
+      <span class="pill">✅ "I build document Q&A systems for legal teams"</span>
+    </div>
+    <p style="margin-top:16px">Niche feels <em>smaller</em>, but it makes you the <strong>obvious choice</strong> — and you can always broaden later.</p>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide">
+    <div class="kicker">This isn't theory</div>
+    <h2>How your trainer actually got work</h2>
+    <p>Most of the jobs and freelance projects I've landed didn't come from applying. They came from:</p>
+    <ul class="clean">
+      <li><strong>Content</strong> — people saw what I built and reached out.</li>
+      <li><strong>Specialization</strong> — being the go-to person for a specific thing.</li>
+    </ul>
+    <p style="margin-top:14px">That's why this track exists — so you don't learn this the slow, expensive way.</p>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide">
+    <div class="kicker">How this track works</div>
+    <h2>30 minutes a day, for 45 days</h2>
+    <div class="grid g3">
+      <div class="card"><h3>🗣️ The talk</h3><p>A short deck like this one, every day — one idea at a time.</p></div>
+      <div class="card"><h3>✅ One action</h3><p>A ≤15-min task that ships real proof. Small, daily, compounding.</p></div>
+      <div class="card"><h3>📈 The payoff</h3><p>By Day 45: a body of work, not just notes.</p></div>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide">
+    <div class="kicker">Why daily, why now</div>
+    <h2>Small things, compounded</h2>
+    <p>One post does almost nothing. <strong>120 posts</strong> over 45 days builds an audience, a reputation, and a portfolio.</p>
+    <p style="margin-top:14px">You're going to be learning incredible things in this course anyway. <strong>Document the journey</strong> and you get a career asset for free.</p>
+    <p class="big" style="margin-top:18px">1.01³⁶⁵ ≈ 37</p>
+    <p class="muted">Tiny daily effort, compounded, is unrecognizable by the end.</p>
+  </section>
+
+  <!-- 11 -->
+  <section class="slide">
+    <div class="kicker">Before you object</div>
+    <h2>Myths we'll kill this week</h2>
+    <ul class="clean">
+      <li class="x">"I need to be an expert first." → No. Document learning, not mastery.</li>
+      <li class="x">"It's just bragging / cringe." → It's a portfolio that happens in public.</li>
+      <li class="x">"I'm not an influencer type." → You're not selling fame. You're showing skill.</li>
+      <li class="x">"Nobody will read it." → The right 100 people are enough to get hired.</li>
+    </ul>
+  </section>
+
+  <!-- 12 -->
+  <section class="slide">
+    <div class="kicker">Where this leads</div>
+    <h2>What you'll walk out with</h2>
+    <div class="grid g2">
+      <div class="card"><h3>🌐 A presence</h3><p>Optimized LinkedIn + GitHub, and a real audience that grew with you.</p></div>
+      <div class="card"><h3>🎯 A niche</h3><p>A clear specialty and positioning line people remember.</p></div>
+      <div class="card"><h3>🗂️ A portfolio</h3><p>3 project case studies + ~30 pieces of content as proof.</p></div>
+      <div class="card"><h3>💼 A pipeline</h3><p>Freelance profile, outreach sent, applications that convert.</p></div>
+    </div>
+  </section>
+
+  <!-- 13 -->
+  <section class="slide">
+    <div class="kicker">Your move today</div>
+    <h2>Career Action — Day 1</h2>
+    <div class="action">
+      <span class="tag">⏱ ≤ 15 minutes</span>
+      <p>Write <strong>one line</strong>: why you're really here, and where you want to be in 12 months.</p>
+    </div>
+    <p style="margin-top:16px" class="muted">Keep it. We'll turn it into your intro post by Day 7. Direction first, then we build the proof.</p>
+  </section>
+
+  <!-- 14 -->
+  <section class="slide cover">
+    <div class="brandbar"><span class="dot"></span><span>Softpro · Career Launchpad</span></div>
+    <h1>Skills get you <em>considered.</em><br>Visibility gets you <em>chosen.</em></h1>
+    <p class="lead" style="margin-top:18px">Now let's go build the skills — Module 01: Running Python. 🚀</p>
+    <div class="footer-note">Tomorrow: the AI job & freelance market in 2026 — where the money actually is.</div>
+  </section>
+
+</div>
+
+<div class="count" id="count">1 / 14</div>
+<div class="nav"><button id="prev" aria-label="Previous">‹</button><button id="full" aria-label="Fullscreen">⛶</button><button id="next" aria-label="Next">›</button></div>
+
+<script>
+  const slides=[...document.querySelectorAll('.slide')];let i=0;
+  const bar=document.getElementById('bar'),count=document.getElementById('count');
+  function show(n){i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,k)=>s.classList.toggle('active',k===i));
+    bar.style.width=((i+1)/slides.length*100)+'%';count.textContent=(i+1)+' / '+slides.length;}
+  function next(){show(i+1)}function prev(){show(i-1)}
+  document.getElementById('next').onclick=next;document.getElementById('prev').onclick=prev;
+  document.getElementById('full').onclick=()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key===' ')next();
+    else if(e.key==='ArrowLeft')prev();
+    else if(e.key==='Home')show(0);else if(e.key==='End')show(slides.length-1);
+    else if(e.key==='f'||e.key==='F')document.getElementById('full').click();});
+  document.getElementById('stage').addEventListener('click',e=>{
+    if(e.target.closest('.nav'))return;const x=e.clientX/window.innerWidth;x>0.5?next():prev();});
+  show(0);
+</script>
+</body>
+</html>
