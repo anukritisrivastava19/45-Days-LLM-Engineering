@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GitHub Basics · Day 4 — Why GitHub? (Part 1 of 3)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  /* ===== Softpro brand theme (shared with the Career Launchpad decks) ===== */
+  :root{
+    --bg:#211f1d; --slide:#ffffff; --cream:#fbf1e6; --cream2:#fdf8f1;
+    --ink:#2c2a28; --ink-soft:#4f463f; --muted:#8a7f73; --line:#efe3d4;
+    --primary:#e8590c; --primary2:#fb8b3d; --gold:#d99000; --steel:#4e6e81; --olive:#6b8e23; --berry:#c0392b;
+    --radius:24px;
+    --shadow:0 30px 80px -20px rgba(20,12,4,.45),0 8px 24px -12px rgba(20,12,4,.3);
+    --font:"Plus Jakarta Sans","Segoe UI",system-ui,-apple-system,sans-serif;
+    --mono:"JetBrains Mono","Cascadia Code",Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;font-family:var(--font);color:var(--ink);-webkit-font-smoothing:antialiased;
+    background:radial-gradient(900px 600px at 12% 0%,#2e2a25 0%,transparent 55%),
+               radial-gradient(900px 600px at 100% 100%,#2a201a 0%,transparent 55%),var(--bg);
+    overflow:hidden}
+  .stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:clamp(12px,3vh,44px)}
+  .slide{display:none;width:min(1160px,96vw);height:min(700px,92vh);background:
+      radial-gradient(1100px 480px at 88% -12%,rgba(232,89,12,.06),transparent 60%),var(--slide);
+    border-radius:var(--radius);box-shadow:var(--shadow);padding:clamp(28px,5vw,64px);
+    overflow:hidden;position:relative;flex-direction:column;justify-content:center}
+  .slide.active{display:flex;animation:rise .5s cubic-bezier(.2,.7,.2,1)}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .slide.active>*{animation:fade .6s both}.slide.active>*:nth-child(2){animation-delay:.07s}
+  .slide.active>*:nth-child(3){animation-delay:.14s}.slide.active>*:nth-child(4){animation-delay:.21s}
+  .slide.active>*:nth-child(5){animation-delay:.28s}
+  @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+  .kicker{font-size:.8rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--primary);margin-bottom:14px}
+  h1{font-size:clamp(2.1rem,5.2vw,3.5rem);font-weight:800;line-height:1.05;letter-spacing:-.02em}
+  h2{font-size:clamp(1.6rem,3.6vw,2.4rem);font-weight:800;line-height:1.1;letter-spacing:-.01em;margin-bottom:18px}
+  p{font-size:clamp(1rem,1.7vw,1.22rem);color:var(--ink-soft);line-height:1.6;max-width:62ch}
+  .lead{font-size:clamp(1.1rem,2vw,1.4rem)}
+  .big{font-size:clamp(2.4rem,6vw,4rem);font-weight:800;color:var(--primary);line-height:1}
+  strong{color:var(--ink)}
+  .muted{color:var(--muted)}
+
+  .grid{display:grid;gap:16px;margin-top:8px}
+  .g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
+  .card{background:var(--cream);border:1px solid var(--line);border-radius:18px;padding:20px 22px;transition:transform .2s,box-shadow .2s}
+  .card:hover{transform:translateY(-4px);box-shadow:0 14px 30px -16px rgba(20,12,4,.35)}
+  .card h3{font-size:1.12rem;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+  .card p{font-size:.98rem;max-width:none}
+  .emoji{font-size:1.4rem}
+  .pill{display:inline-block;background:var(--cream);border:1px solid var(--line);border-radius:999px;
+    padding:7px 16px;font-size:.92rem;font-weight:600;color:var(--ink-soft);margin:5px 6px 0 0}
+  ul.clean{list-style:none;margin-top:10px}
+  ul.clean li{font-size:clamp(1rem,1.7vw,1.2rem);color:var(--ink-soft);line-height:1.5;padding:9px 0 9px 34px;position:relative}
+  ul.clean li::before{content:"";position:absolute;left:0;top:16px;width:14px;height:14px;border-radius:50%;
+    background:var(--primary);box-shadow:0 0 0 4px rgba(232,89,12,.15)}
+  ul.clean li.x::before{background:var(--berry);box-shadow:0 0 0 4px rgba(192,57,43,.15)}
+  .vs{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:stretch;margin-top:6px}
+  .vs .col{border-radius:18px;padding:22px}
+  .vs .no{background:#fdecea;border:1px solid #f3c9c2}.vs .yes{background:#eef6ec;border:1px solid #cfe6c6}
+  .vs .mid{display:flex;align-items:center;font-weight:800;color:var(--muted)}
+  .vs h3{font-size:1.05rem;margin-bottom:8px}.vs p{font-size:.95rem;max-width:none}
+
+  .action{background:linear-gradient(135deg,#fff,var(--cream2));border:2px solid var(--primary);
+    border-radius:20px;padding:24px 26px;margin-top:14px}
+  .action .tag{font-size:.78rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--primary)}
+  .action p{font-size:1.15rem;color:var(--ink);font-weight:600;margin-top:6px;max-width:none}
+
+  /* command-line block */
+  .cmd{font-family:var(--mono);background:#211f1d;color:#fbf1e6;border-radius:14px;
+    padding:18px 20px;font-size:clamp(.85rem,1.5vw,1.05rem);line-height:1.8;margin-top:12px;overflow:auto}
+  .cmd .c{color:#fb8b3d}            /* the command */
+  .cmd .o{color:#8a7f73}            /* comment / output */
+  .cmd .p{color:#6b8e23}            /* prompt $ */
+
+  /* diagram wrapper */
+  .diagram{margin-top:10px;background:var(--cream2);border:1px solid var(--line);border-radius:18px;padding:14px}
+  .diagram svg{display:block;width:100%;height:auto}
+  .svg-label{font-family:var(--font);font-weight:700;fill:var(--ink)}
+  .svg-sub{font-family:var(--mono);fill:var(--muted)}
+  .caption{text-align:center;color:var(--muted);font-size:.92rem;margin-top:8px}
+
+  .cover{background:radial-gradient(1200px 500px at 20% -10%,rgba(232,89,12,.16),transparent 60%),
+      radial-gradient(900px 500px at 100% 120%,rgba(217,144,0,.12),transparent 55%),var(--slide)}
+  .brandbar{display:flex;align-items:center;gap:10px;margin-bottom:auto}
+  .dot{width:13px;height:13px;border-radius:50%;background:var(--primary)}
+  .brandbar span{font-weight:700;letter-spacing:.02em}
+  .cover h1 em{font-style:normal;color:var(--primary)}
+  .footer-note{margin-top:auto;color:var(--muted);font-size:.95rem}
+
+  /* nav + chrome */
+  .bar{position:fixed;top:0;left:0;height:4px;background:linear-gradient(90deg,var(--primary),var(--primary2));z-index:9;transition:width .3s}
+  .count{position:fixed;left:18px;bottom:14px;color:var(--cream);font-size:.85rem;font-weight:600;opacity:.8;z-index:9;font-variant-numeric:tabular-nums}
+  .nav{position:fixed;right:18px;bottom:14px;display:flex;gap:8px;z-index:9}
+  .nav button{width:42px;height:42px;border-radius:12px;border:1px solid rgba(255,255,255,.18);
+    background:rgba(255,255,255,.08);color:#fff;font-size:1.1rem;cursor:pointer;backdrop-filter:blur(8px);transition:background .2s}
+  .nav button:hover{background:rgba(255,255,255,.2)}
+  .hint{position:fixed;right:18px;top:16px;color:var(--cream);font-size:.78rem;opacity:.5;z-index:9}
+  @media(max-width:640px){.g2,.g3,.vs{grid-template-columns:1fr}.vs .mid{display:none}}
+</style>
+</head>
+<body>
+<div class="bar" id="bar"></div>
+<div class="hint">→ / Space to advance · F for fullscreen</div>
+<div class="stage" id="stage">
+
+  <!-- 1 — cover -->
+  <section class="slide cover active">
+    <div class="brandbar"><span class="dot"></span><span>Softpro · GitHub Basics</span></div>
+    <div class="kicker">Day 4 · Part 1 of 3 · ~20 min</div>
+    <h1>Your code needs a <em>time machine</em><br>and a home on the internet</h1>
+    <p class="lead" style="margin-top:18px">That's what Git &amp; GitHub are. Today: <strong>why</strong> every developer uses them, and the handful of words you need to start.</p>
+    <div class="footer-note">No commands to memorise yet — just the mental model. We'll type real commands on Day 5.</div>
+  </section>
+
+  <!-- 2 — the pain -->
+  <section class="slide">
+    <div class="kicker">The problem (you've felt this)</div>
+    <h2>The "final" file nightmare</h2>
+    <div class="grid g2">
+      <div class="card"><h3><span class="emoji">😩</span> How beginners save work</h3>
+        <p><code>project.py</code> → <code>project_final.py</code> → <code>project_final2.py</code> → <code>project_FINAL_really.py</code>… Sound familiar?</p></div>
+      <div class="card"><h3><span class="emoji">💥</span> And then…</h3>
+        <p>You break something and can't get back. Your laptop dies. A teammate emails you their version. Chaos.</p></div>
+    </div>
+    <p style="margin-top:16px">There's a tool built exactly for this. It's the <strong>#1 thing</strong> that separates "I write code" from "I work like a developer."</p>
+  </section>
+
+  <!-- 3 — git vs github -->
+  <section class="slide">
+    <div class="kicker">Two different things, one workflow</div>
+    <h2>Git vs GitHub</h2>
+    <div class="vs">
+      <div class="col yes"><h3>🔧 Git</h3><p>The <strong>tool</strong> on your computer that tracks every change to your code. Works fully offline. Created by the same person who made Linux.</p></div>
+      <div class="mid">+</div>
+      <div class="col yes"><h3>☁️ GitHub</h3><p>A <strong>website</strong> that stores your Git projects online — so they're backed up, shareable, and visible to the world (and recruiters).</p></div>
+    </div>
+    <p style="margin-top:16px" class="muted">Analogy: <strong>Git</strong> is the camera that takes the photos. <strong>GitHub</strong> is the cloud album where you store and share them.</p>
+  </section>
+
+  <!-- 4 — commit = snapshot (SVG timeline) -->
+  <section class="slide">
+    <div class="kicker">The core idea</div>
+    <h2>A commit = a saved snapshot</h2>
+    <div class="diagram">
+      <svg viewBox="0 0 920 200" role="img" aria-label="A timeline of commits as snapshots">
+        <!-- baseline -->
+        <line x1="60" y1="110" x2="820" y2="110" stroke="#efe3d4" stroke-width="6" stroke-linecap="round"/>
+        <line x1="60" y1="110" x2="780" y2="110" stroke="#e8590c" stroke-width="6" stroke-linecap="round"/>
+        <!-- arrowhead -->
+        <path d="M820 110 l-18 -9 v18 z" fill="#e8590c"/>
+        <!-- commits -->
+        <g font-size="15">
+          <circle cx="140" cy="110" r="20" fill="#e8590c"/>
+          <text x="140" y="150" text-anchor="middle" class="svg-sub">a1b2c3</text>
+          <text x="140" y="172" text-anchor="middle" class="svg-label" font-size="14">Start project</text>
+
+          <circle cx="350" cy="110" r="20" fill="#e8590c"/>
+          <text x="350" y="150" text-anchor="middle" class="svg-sub">d4e5f6</text>
+          <text x="350" y="172" text-anchor="middle" class="svg-label" font-size="14">Add login page</text>
+
+          <circle cx="560" cy="110" r="20" fill="#e8590c"/>
+          <text x="560" y="150" text-anchor="middle" class="svg-sub">7g8h9i</text>
+          <text x="560" y="172" text-anchor="middle" class="svg-label" font-size="14">Fix the bug</text>
+
+          <circle cx="770" cy="110" r="20" fill="#d99000"/>
+          <text x="770" y="150" text-anchor="middle" class="svg-sub">j0k1l2</text>
+          <text x="770" y="172" text-anchor="middle" class="svg-label" font-size="14">Add feature</text>
+        </g>
+        <text x="60" y="40" class="svg-label" font-size="17">Every commit is a checkpoint you can return to</text>
+        <text x="835" y="100" class="svg-sub" font-size="14">time →</text>
+      </svg>
+    </div>
+    <p style="margin-top:6px">Each <strong>commit</strong> freezes your whole project at one moment, with a short message saying what changed. The chain of commits is your project's <strong>history</strong> — your time machine.</p>
+  </section>
+
+  <!-- 5 — why it changes everything -->
+  <section class="slide">
+    <div class="kicker">Why bother learning this</div>
+    <h2>What Git/GitHub buys you</h2>
+    <div class="grid g2">
+      <div class="card"><h3><span class="emoji">⏪</span> Undo anything</h3><p>Broke it? Jump back to any commit. No more <code>_final2</code> files — ever.</p></div>
+      <div class="card"><h3><span class="emoji">☁️</span> Never lose work</h3><p>Pushed to GitHub = backed up online. Laptop dies, your code lives.</p></div>
+      <div class="card"><h3><span class="emoji">👥</span> Work with others</h3><p>Many people edit the same project without overwriting each other (Day 6).</p></div>
+      <div class="card"><h3><span class="emoji">💼</span> Get hired</h3><p>Your GitHub <em>is</em> your portfolio. Recruiters look here before your resume.</p></div>
+    </div>
+  </section>
+
+  <!-- 6 — local vs remote (SVG) -->
+  <section class="slide">
+    <div class="kicker">The two places your code lives</div>
+    <h2>Local repo &harr; Remote repo</h2>
+    <div class="diagram">
+      <svg viewBox="0 0 920 230" role="img" aria-label="Local computer and GitHub cloud connected by push and pull">
+        <!-- local box -->
+        <rect x="40" y="70" width="340" height="120" rx="16" fill="#fbf1e6" stroke="#e8590c" stroke-width="2.5"/>
+        <text x="210" y="112" text-anchor="middle" class="svg-label" font-size="20">💻 Your computer</text>
+        <text x="210" y="142" text-anchor="middle" class="svg-sub" font-size="15">local repository (Git)</text>
+        <text x="210" y="166" text-anchor="middle" class="svg-sub" font-size="13">where you write &amp; commit</text>
+        <!-- remote box -->
+        <rect x="540" y="70" width="340" height="120" rx="16" fill="#eef3f5" stroke="#4e6e81" stroke-width="2.5"/>
+        <text x="710" y="112" text-anchor="middle" class="svg-label" font-size="20">☁️ GitHub</text>
+        <text x="710" y="142" text-anchor="middle" class="svg-sub" font-size="15">remote repository</text>
+        <text x="710" y="166" text-anchor="middle" class="svg-sub" font-size="13">backup · share · collaborate</text>
+        <!-- push arrow -->
+        <line x1="385" y1="105" x2="535" y2="105" stroke="#6b8e23" stroke-width="5"/>
+        <path d="M535 105 l-16 -8 v16 z" fill="#6b8e23"/>
+        <text x="460" y="92" text-anchor="middle" class="svg-sub" font-size="15" fill="#6b8e23">git push</text>
+        <!-- pull arrow -->
+        <line x1="535" y1="155" x2="385" y2="155" stroke="#d99000" stroke-width="5"/>
+        <path d="M385 155 l16 -8 v16 z" fill="#d99000"/>
+        <text x="460" y="178" text-anchor="middle" class="svg-sub" font-size="15" fill="#d99000">git pull</text>
+      </svg>
+    </div>
+    <p style="margin-top:6px"><strong>Push</strong> = send your commits up to GitHub. <strong>Pull</strong> = bring others' changes down. (Hands-on with these on Day 5.)</p>
+  </section>
+
+  <!-- 7 — core vocabulary -->
+  <section class="slide">
+    <div class="kicker">The words people throw around</div>
+    <h2>Core terminology — decoded</h2>
+    <div class="grid g2">
+      <div class="card"><h3>📁 Repository ("repo")</h3><p>A project folder that Git is tracking — your code + its full history.</p></div>
+      <div class="card"><h3>📸 Commit</h3><p>One saved snapshot + a message describing the change.</p></div>
+      <div class="card"><h3>⬆️ Push / ⬇️ Pull</h3><p>Upload your commits to GitHub / download new ones from it.</p></div>
+      <div class="card"><h3>🍴 Clone</h3><p>Copy an online repo down to your computer to work on it.</p></div>
+    </div>
+    <p style="margin-top:14px" class="muted">Don't memorise — you'll <em>use</em> these starting tomorrow. Today just recognise them.</p>
+  </section>
+
+  <!-- 8 — get an account -->
+  <section class="slide">
+    <div class="kicker">Step 0 — do this today</div>
+    <h2>Create your GitHub account</h2>
+    <ul class="clean">
+      <li>Go to <strong>github.com</strong> → Sign up (it's free).</li>
+      <li>Pick a <strong>professional username</strong> — this becomes your URL: <code>github.com/yourname</code>. Recruiters see it. Avoid <code>xX_coder_69_Xx</code>.</li>
+      <li>Use an email you'll keep. Add a real photo later.</li>
+      <li>That's it — you now have a home for every project in this course.</li>
+    </ul>
+    <p style="margin-top:14px">Your 4 course projects + capstone will all live here. By Day 45 this page <strong>is</strong> your portfolio.</p>
+  </section>
+
+  <!-- 9 — what a repo looks like -->
+  <section class="slide">
+    <div class="kicker">What you'll see online</div>
+    <h2>Anatomy of a repo page</h2>
+    <div class="grid g2">
+      <div class="card"><h3>📄 The file list</h3><p>Your folders &amp; files, exactly as on your computer.</p></div>
+      <div class="card"><h3>📖 The README</h3><p>The <code>README.md</code> shows under the files — it's the project's front page (what it does, how to run it).</p></div>
+      <div class="card"><h3>🕑 Commits</h3><p>A clickable history of every change, by whom, when.</p></div>
+      <div class="card"><h3>⭐ Stars / forks</h3><p>How others bookmark &amp; copy your project.</p></div>
+    </div>
+    <p style="margin-top:14px" class="muted">A good README is the difference between "some files" and "a project someone respects."</p>
+  </section>
+
+  <!-- 10 — recap -->
+  <section class="slide">
+    <div class="kicker">Part 1 recap</div>
+    <h2>What you now know</h2>
+    <ul class="clean">
+      <li><strong>Git</strong> = the tool that tracks changes; <strong>GitHub</strong> = the cloud that stores &amp; shares them.</li>
+      <li>A <strong>commit</strong> is a snapshot; the chain of commits is your <strong>history</strong> (your undo button).</li>
+      <li>Code lives in two places: <strong>local</strong> (your laptop) and <strong>remote</strong> (GitHub) — linked by <strong>push</strong> / <strong>pull</strong>.</li>
+      <li>Your GitHub profile is your <strong>portfolio</strong>.</li>
+    </ul>
+    <p style="margin-top:14px">Tomorrow (Day 5): the <strong>everyday workflow</strong> — the 3 commands you'll run hundreds of times.</p>
+  </section>
+
+  <!-- 11 — action -->
+  <section class="slide">
+    <div class="kicker">Your move today</div>
+    <h2>GitHub Action — Day 4</h2>
+    <div class="action">
+      <span class="tag">⏱ ≤ 10 minutes</span>
+      <p>Create your <strong>GitHub account</strong> with a clean username, and explore one real repo (try <code>github.com/python/cpython</code>) — find its README and its commit history.</p>
+    </div>
+    <p style="margin-top:16px" class="muted">Bring your username tomorrow — we'll connect it and push your first commit.</p>
+  </section>
+
+  <!-- 12 — close -->
+  <section class="slide cover">
+    <div class="brandbar"><span class="dot"></span><span>Softpro · GitHub Basics</span></div>
+    <h1>No more <em>project_final_v2.</em><br>You have a time machine now.</h1>
+    <p class="lead" style="margin-top:18px">Part 2 tomorrow: add → commit → push, the loop every developer runs daily. 🚀</p>
+    <div class="footer-note">Part 1 of 3 · Day 4 — Why GitHub. Next: Day 5 — The Everyday Workflow.</div>
+  </section>
+
+</div>
+
+<div class="count" id="count">1 / 12</div>
+<div class="nav"><button id="prev" aria-label="Previous">‹</button><button id="full" aria-label="Fullscreen">⛶</button><button id="next" aria-label="Next">›</button></div>
+
+<script>
+  const slides=[...document.querySelectorAll('.slide')];let i=0;
+  const bar=document.getElementById('bar'),count=document.getElementById('count');
+  function show(n){i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,k)=>s.classList.toggle('active',k===i));
+    bar.style.width=((i+1)/slides.length*100)+'%';count.textContent=(i+1)+' / '+slides.length;}
+  function next(){show(i+1)}function prev(){show(i-1)}
+  document.getElementById('next').onclick=next;document.getElementById('prev').onclick=prev;
+  document.getElementById('full').onclick=()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key===' ')next();
+    else if(e.key==='ArrowLeft')prev();
+    else if(e.key==='Home')show(0);else if(e.key==='End')show(slides.length-1);
+    else if(e.key==='f'||e.key==='F')document.getElementById('full').click();});
+  document.getElementById('stage').addEventListener('click',e=>{
+    if(e.target.closest('.nav'))return;const x=e.clientX/window.innerWidth;x>0.5?next():prev();});
+  show(0);
+</script>
+</body>
+</html>

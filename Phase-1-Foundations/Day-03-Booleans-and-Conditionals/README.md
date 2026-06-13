@@ -63,4 +63,4 @@ Three of them — see [`exercises/`](exercises/):
 2. **BMI Calculator** — `float()` casting + an `if/elif/elif/else` chain
 3. **Rock, Paper, Scissors** — `random`, `in`, and combining `and`/`or`
 
-➡ Next: **Day 04 — Loops** *(coming soon)*
+➡ Next: **[Day 04 — Loops](../Day-04-Loops/)**
