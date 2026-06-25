@@ -108,7 +108,10 @@ Phase-X-Name/Day-NN-Topic-In-Kebab-Case/
 - ✅ **Day 7** complete and verified (8 modules + 3 exercises: Errors, modules & OOP — error-types/try-except/imports/pip/classes/methods/inheritance/lambda-functions).
 - ✅ **Day 7 Coding Challenge Day** (`Day-07.../coding-challenges/`) — 15 problems grouped by topic recapping Days 1–6 (Day1 hms/BMI · Day2 initials/palindrome/title-case · Day3 grade/leap-year · Day4 digit-sum/triangle/fibonacci · Day5 temp-convert/`*args`-stats · Day6 word-freq/set-compare/gradebook), each a `qNN_*.py` stub + verified `_solution.py`, plus a grouped `README.md` with approach hints (no SOLUTIONS.md).
 - ✅ **Python power-up week (Days 1–7) is fully built and verified.** All example scripts print ASCII-only (₹/emoji in comments only) so they run under the Windows console codepage.
+- ✅ **Day 8** complete (Python for AI — requests / async / dotenv / type hints / Pydantic; 5 modules + 2 exercises).
+- ✅ **Day 9** complete (LLM fundamentals & first **Groq** call; 5 modules + 2 exercises). Provider switched Gemini→**Groq** course-wide (`groq` + `llama-3.1-8b-instant`); embeddings stay local/Gemini for Day 16. Folder: `Day-09-LLM-Fundamentals-First-Groq-Call`.
+- ✅ **Day 10** complete (Prompt engineering I — system prompts / zero-shot / few-shot / chain-of-thought / anatomy-checklist; 5 modules + 2 exercises). All Groq, temperature 0; module 05 + checklist run offline. Folder: `Day-10-Prompt-Engineering-I`.
 - ✅ **GitHub Basics mini-track** — a beginner 3-part visual deck woven into Days 4–6, each in a `github-basics/` folder (`index.html` + speaker-notes `README.md`): Day 4 *Why GitHub* (commit-timeline + local/remote SVGs) · Day 5 *Everyday Workflow* (add/commit/push staging SVG, `.gitignore`) · Day 6 *Branching & Collaboration* (branch-and-merge SVG, PRs). Same Softpro deck template as the career talks, with added `.cmd`/`.diagram` styles; explanations use inline SVG.
-- ⏳ Day 8+ (AI track) next.
+- ⏳ Day 11+ (AI track) next.
 - ⏳ Career decks Days 8–45 to follow; Days 4–7 trainer's guides optional (not yet written).
 - Repo initialized (git).
